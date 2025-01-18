@@ -333,3 +333,226 @@ public class ObjectExample {
 **Explanation:**  
 - `Object` can hold `int`, `double`, `long`, and `String` values.  
 - Java uses **autoboxing** to convert primitive types into their wrapper objects automatically.  
+
+---
+
+# Java Full Stack Development Notes  Day3
+
+## **1. Types of Variables in Java**  
+
+Java has three types of variables:  
+1. **Static Variables (Class Variables)**  
+2. **Instance Variables (Object Variables)**  
+3. **Local Variables (Method/Block Variables)**  
+
+---
+
+### **1.1 Static Variables**  
+- Declared using the `static` keyword inside a class.  
+- Shared among all objects of the class (single copy for the entire class).  
+- Memory is allocated only once, at class loading time.  
+- Can be accessed using `ClassName.variableName`.  
+
+#### **Example:**
+```java
+class StaticExample {
+    static int count = 0; // Static variable
+
+    StaticExample() {
+        count++; // Increments for every object
+    }
+
+    void displayCount() {
+        System.out.println("Count: " + count);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        StaticExample obj1 = new StaticExample();
+        StaticExample obj2 = new StaticExample();
+
+        obj1.displayCount(); // Output: 2
+        obj2.displayCount(); // Output: 2 (Same value for all objects)
+    }
+}
+```
+📌 **Note:** All objects share the same value of the static variable.  
+
+---
+
+### **1.2 Instance Variables**  
+- Declared without `static`, inside a class but outside methods.  
+- Each object gets its own copy of the instance variable.  
+- Memory is allocated when an object is created and deallocated when the object is destroyed.  
+
+#### **Example:**
+```java
+class InstanceExample {
+    int number = 10; // Instance variable
+
+    void displayNumber() {
+        System.out.println("Number: " + number);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        InstanceExample obj1 = new InstanceExample();
+        InstanceExample obj2 = new InstanceExample();
+
+        obj1.number = 20; // Changes value only for obj1
+
+        obj1.displayNumber(); // Output: 20
+        obj2.displayNumber(); // Output: 10
+    }
+}
+```
+📌 **Note:** Each object has its own copy of instance variables.  
+
+---
+
+### **1.3 Local Variables**  
+- Declared inside a method or a block.  
+- Limited scope (cannot be accessed outside the block).  
+- Must be initialized before use.  
+
+#### **Example:**
+```java
+class LocalExample {
+    void display() {
+        int x = 50; // Local variable
+        System.out.println("Local variable: " + x);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        LocalExample obj = new LocalExample();
+        obj.display(); // Output: Local variable: 50
+    }
+}
+```
+📌 **Note:** The local variable `x` exists only within the `display()` method.  
+
+---
+
+## **2. Widening and Narrowing in Java**  
+
+### **2.1 Widening (Automatic Type Conversion)**
+- Small data types can be stored in larger data types **automatically**.  
+- No explicit typecasting needed.  
+
+#### **Conversion Order:**  
+📌 `byte → short → int → long → float → double`  
+📌 `char → int → float → double`  
+
+#### **Example:**
+```java
+int num = 100;
+double d = num; // Implicit conversion (int to double)
+System.out.println(d); // Output: 100.0
+```
+
+---
+
+### **2.2 Narrowing (Explicit Type Casting)**
+- Large data types **must** be manually converted into smaller ones.  
+- Requires **explicit typecasting** using `(datatype)`.  
+
+#### **Example:**
+```java
+double d = 12.54;
+float f = (float) d; // Explicit conversion
+System.out.println(f); // Output: 12.54
+```
+
+---
+
+## **3. Variable Scope in Java**  
+- **Outer block variables** can be redeclared inside an inner block.  
+- **Local variables take precedence** over outer variables inside the block.  
+
+#### **Example:**
+```java
+class ScopeExample {
+    int x = 10; // Instance variable
+
+    void show() {
+        int x = 20; // Local variable (higher priority)
+        System.out.println(x); // Output: 20 (Local variable)
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        ScopeExample obj = new ScopeExample();
+        obj.show();
+    }
+}
+```
+📌 **Note:** Local variable `x` inside `show()` method overrides the instance variable.  
+
+---
+
+## **4. Operators in Java**  
+
+### **4.1 Unary Operators**  
+- Operates on a single operand.  
+- **Examples:** `+`, `-`, `++`, `--`, `!`  
+
+```java
+int a = 5;
+System.out.println(+a);  // Output: 5
+System.out.println(-a);  // Output: -5
+System.out.println(++a); // Output: 6 (Pre-increment)
+System.out.println(a++); // Output: 6 (Post-increment)
+System.out.println(!true); // Output: false
+```
+
+---
+
+### **4.2 Binary Operators**  
+- Operates on two operands.  
+- **Categories:**  
+  - **Arithmetic:** `+`, `-`, `*`, `/`, `%`  
+  - **Logical:** `&&`, `||`, `!`  
+  - **Bitwise:** `&`, `|`, `^`, `~`, `<<`, `>>`  
+
+#### **Example:**
+```java
+int a = 10, b = 5;
+System.out.println(a + b); // Output: 15
+System.out.println(a & b); // Bitwise AND: Output 0
+```
+
+---
+
+### **4.3 Ternary Operator (`?:`)**  
+- Short-hand for `if-else`.  
+- **Syntax:** `condition ? true_value : false_value;`  
+
+#### **Example:**
+```java
+int age = 18;
+String result = (age >= 18) ? "Adult" : "Minor";
+System.out.println(result); // Output: Adult
+```
+
+---
+
+## **5. Bitwise Operations in Java**  
+- Used for manipulating individual bits of a number.  
+- `&` (AND), `|` (OR), `^` (XOR), `~` (NOT).  
+
+### **Using `Integer.toBinaryString()` to Convert to Binary**  
+```java
+System.out.println(Integer.toBinaryString(10)); // Output: 1010
+System.out.println(Integer.toBinaryString(5));  // Output: 101
+System.out.println(Integer.toBinaryString(10 & 5)); // Output: 0
+```
+
+**Explanation:**  
+- `10 (1010)`  
+- `5  (0101)`  
+- `10 & 5` results in `0000` (Bitwise AND).  
