@@ -606,7 +606,7 @@ public class CharInputExample {
 📌 **`charAt(0)` extracts the first character from the entered string.**  
 
 
-###Accepting Characters with Scanner in Java
+### Accepting Characters with Scanner in Java
 
 To accept a character in Java using the Scanner class, you can use the `next().charAt(0)` method. Here's how you can implement it:
 
@@ -651,6 +651,7 @@ public class CharInputExample {
 ```
 
 This code prompts the user to enter a character, reads the input as a string using `next()`, and then extracts the first character of the string using `charAt(0)`. The character is then printed to the console.
+
 ---
 
 ### **2. Using InputStreamReader and BufferedReader**
