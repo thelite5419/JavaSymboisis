@@ -556,3 +556,134 @@ System.out.println(Integer.toBinaryString(10 & 5)); // Output: 0
 - `10 (1010)`  
 - `5  (0101)`  
 - `10 & 5` results in `0000` (Bitwise AND).  
+
+---
+
+# Java Full Stack Development Notes Day4
+## **Reading Input in Java Using Different Methods**  
+
+Java provides multiple ways to take input from the user. Below are examples using **Scanner, InputStreamReader with BufferedReader**, and `System.in.read()` for reading a **character**.  
+
+---
+
+### **1. Using Scanner Class**
+The `Scanner` class is a simple way to take input in Java.
+
+#### **Reading a String**
+```java
+import java.util.Scanner;
+
+public class ScannerExample {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter a string: ");
+        String s = sc.next();  // Reads until space
+        System.out.println("You entered: " + s);
+
+        sc.close();
+    }
+}
+```
+📌 **`next()` reads only one word (stops at space).**  
+
+#### **Reading a Character**
+```java
+import java.util.Scanner;
+
+public class CharInputExample {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter a character: ");
+        char ch = sc.next().charAt(0); // Extracts the first character
+        System.out.println("You entered: " + ch);
+
+        sc.close();
+    }
+}
+```
+📌 **`charAt(0)` extracts the first character from the entered string.**  
+
+---
+
+### **2. Using InputStreamReader and BufferedReader**
+BufferedReader allows reading an entire line or a word efficiently.
+
+#### **Example: Reading a String Using BufferedReader**
+```java
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+
+public class BufferedReaderExample {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        System.out.print("Enter a string: ");
+        String s = br.readLine(); // Reads an entire line including spaces
+        System.out.println("You entered: " + s);
+    }
+}
+```
+📌 **`readLine()` reads the full line (including spaces) until Enter is pressed.**  
+
+---
+
+### **3. Difference Between `next()` and `nextLine()`**
+- `next()` → Reads **only one word** (stops at space).  
+- `nextLine()` → Reads **the entire line** including spaces.  
+
+#### **Example:**
+```java
+import java.util.Scanner;
+
+public class ScannerDifference {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter a string using next(): ");
+        String s1 = sc.next(); // Reads until space
+        System.out.println("Using next(): " + s1);
+
+        sc.nextLine(); // Clear the buffer
+
+        System.out.print("Enter a string using nextLine(): ");
+        String s2 = sc.nextLine(); // Reads entire line
+        System.out.println("Using nextLine(): " + s2);
+
+        sc.close();
+    }
+}
+```
+📌 **Always use `sc.nextLine()` after `sc.next()` to clear the buffer.**  
+
+---
+
+### **4. Reading a Character Using `System.in.read()`**
+This method reads a **single byte** (ASCII value) and must be typecast to `char`.
+
+#### **Example:**
+```java
+import java.io.IOException;
+
+public class ReadCharacter {
+    public static void main(String[] args) throws IOException {
+        System.out.print("Enter a character: ");
+        char ch2 = (char) System.in.read(); // Reads only one character
+        System.out.println("You entered: " + ch2);
+    }
+}
+```
+📌 **This method reads one character but also captures the Enter key (`\n`).**  
+
+---
+
+### **Summary of Input Methods**
+| **Method**                 | **Reads**                | **Stops at**       |
+|----------------------------|-------------------------|--------------------|
+| `Scanner.next()`           | One word (String)       | Space             |
+| `Scanner.nextLine()`       | Full line (String)      | Enter key         |
+| `Scanner.next().charAt(0)` | First character (char)  | -                 |
+| `BufferedReader.readLine()`| Full line (String)      | Enter key         |
+| `System.in.read()`         | Single character (ASCII)| Enter key         |
