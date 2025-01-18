@@ -605,6 +605,8 @@ public class CharInputExample {
 ```
 📌 **`charAt(0)` extracts the first character from the entered string.**  
 
+--- 
+
 
 ### Accepting Characters with Scanner in Java
 
@@ -734,3 +736,235 @@ public class ReadCharacter {
 | `Scanner.next().charAt(0)` | First character (char)  | -                 |
 | `BufferedReader.readLine()`| Full line (String)      | Enter key         |
 | `System.in.read()`         | Single character (ASCII)| Enter key         |
+
+
+---
+
+# Java Full Stack Development Notes Day5
+
+## **1. If-Else and Else-If Statements**  
+Conditional statements allow the program to execute a block of code based on certain conditions.
+
+### **1.1 If-Else Statement**  
+- **Syntax:**  
+```java
+if (condition) {
+    // Code executes if condition is true
+} else {
+    // Code executes if condition is false
+}
+```
+- **Example:**  
+```java
+public class IfElseExample {
+    public static void main(String[] args) {
+        int age = 18;
+
+        if (age >= 18) {
+            System.out.println("You are eligible to vote.");
+        } else {
+            System.out.println("You are not eligible to vote.");
+        }
+    }
+}
+```
+- **Output:**  
+```
+You are eligible to vote.
+```
+
+---
+
+### **1.2 Else-If Ladder**  
+- **Used when there are multiple conditions to check.**  
+- **Syntax:**  
+```java
+if (condition1) {
+    // Code for condition1
+} else if (condition2) {
+    // Code for condition2
+} else {
+    // Code if all conditions fail
+}
+```
+- **Example:**  
+```java
+public class ElseIfExample {
+    public static void main(String[] args) {
+        int marks = 75;
+
+        if (marks >= 90) {
+            System.out.println("Grade: A");
+        } else if (marks >= 75) {
+            System.out.println("Grade: B");
+        } else if (marks >= 60) {
+            System.out.println("Grade: C");
+        } else {
+            System.out.println("Grade: F");
+        }
+    }
+}
+```
+- **Output:**  
+```
+Grade: B
+```
+
+---
+
+## **2. Ternary Operator (`?:`)**  
+The ternary operator is a **shorter** way to write `if-else` statements.
+
+### **2.1 Syntax:**  
+```java
+variable = (condition) ? true_value : false_value;
+```
+
+### **2.2 Example:**  
+```java
+public class TernaryExample {
+    public static void main(String[] args) {
+        int num = 10;
+        String result = (num % 2 == 0) ? "Even" : "Odd";
+        System.out.println(result);
+    }
+}
+```
+- **Output:**  
+```
+Even
+```
+
+---
+
+## **3. Nested Ternary Operator**  
+Ternary operators can be **nested** to check multiple conditions.
+
+### **Example: Finding the Largest of Three Numbers**  
+```java
+public class NestedTernaryExample {
+    public static void main(String[] args) {
+        int a = 10, b = 25, c = 15;
+
+        String largest = (a > b && a > c) ? (a + " is largest") 
+                     : (b > c) ? (b + " is largest") 
+                               : (c + " is largest");
+
+        System.out.println(largest);
+    }
+}
+```
+- **Output:**  
+```
+25 is largest
+```
+
+---
+
+## **4. Switch Case Statement**  
+- **Used when there are multiple conditions based on a single variable.**  
+- **In Java, switch can work with:**  
+  - `byte`, `short`, `int`, `char`, `String`, `enum`
+
+### **4.1 Syntax:**  
+```java
+switch (expression) {
+    case value1:
+        // Code for value1
+        break;
+    case value2:
+        // Code for value2
+        break;
+    default:
+        // Code if no case matches
+}
+```
+
+### **4.2 Example:**  
+```java
+import java.util.Scanner;
+
+public class SwitchExample {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter a day number (1-3): ");
+        int day = sc.nextInt();
+
+        switch (day) {
+            case 1:
+                System.out.println("Monday");
+                break;
+            case 2:
+                System.out.println("Tuesday");
+                break;
+            case 3:
+                System.out.println("Wednesday");
+                break;
+            default:
+                System.out.println("Invalid day number");
+        }
+
+        sc.close();
+    }
+}
+```
+- **Input:**  
+```
+2
+```
+- **Output:**  
+```
+Tuesday
+```
+
+📌 **Note:**  
+- `break;` **stops execution** after a case is matched.  
+- `default:` executes when no case matches.  
+- **In Java, `String` is allowed in switch cases, but in C/C++ it is not.**
+
+---
+
+## **5. Date Calculation in Java**  
+
+Java provides the `LocalDate` and `Period` classes to work with dates.
+
+### **5.1 Example: Calculating Age from Birthdate**  
+```java
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Scanner;
+
+public class DateExample {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter your birthdate (yyyy-MM-dd): ");
+        String s = sc.next(); // Read date as string
+
+        LocalDate birthDate = LocalDate.parse(s); // Convert to LocalDate
+        LocalDate currentDate = LocalDate.now(); // Get today's date
+
+        Period age = Period.between(birthDate, currentDate); // Calculate difference
+
+        System.out.println("You are " + age.getYears() + " years, " 
+                           + age.getMonths() + " months, and " 
+                           + age.getDays() + " days old.");
+
+        sc.close();
+    }
+}
+```
+- **Input:**  
+```
+2000-05-20
+```
+- **Output:**  
+```
+You are 24 years, 7 months, and 28 days old.
+```
+
+📌 **Explanation:**  
+- `LocalDate.parse(s)` converts a string date (`yyyy-MM-dd`) into a `LocalDate` object.  
+- `LocalDate.now()` gives today's date.  
+- `Period.between(birthDate, currentDate)` calculates the difference in **years, months, and days**.  
+
