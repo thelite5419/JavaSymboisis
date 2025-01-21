@@ -968,3 +968,136 @@ You are 24 years, 7 months, and 28 days old.
 - `LocalDate.now()` gives today's date.  
 - `Period.between(birthDate, currentDate)` calculates the difference in **years, months, and days**.  
 
+
+---
+
+# Java Full Stack Development Notes Day6
+## **For Loop in Java with `break` and `continue`**  
+
+The `for` loop is used when the number of iterations is known. The loop consists of three parts:  
+1. **Initialization** (Executes once before the loop starts)  
+2. **Condition** (Checks before each iteration)  
+3. **Increment/Decrement** (Updates loop control variable)  
+
+---
+
+## **1. Syntax of `for` Loop**  
+```java
+for (initialization; condition; update) {
+    // Code to execute in each iteration
+}
+```
+
+### **Example: Basic For Loop**  
+```java
+public class ForLoopExample {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 5; i++) {
+            System.out.println("Iteration: " + i);
+        }
+    }
+}
+```
+**Output:**  
+```
+Iteration: 1  
+Iteration: 2  
+Iteration: 3  
+Iteration: 4  
+Iteration: 5  
+```
+
+---
+
+## **2. Using `break` in a `for` Loop**  
+- The `break` statement **terminates** the loop immediately when executed.  
+
+### **Example: Stopping Loop at a Certain Condition**  
+```java
+public class BreakExample {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 10; i++) {
+            if (i == 6) {
+                System.out.println("Loop breaks at i = " + i);
+                break; // Stops the loop when i == 6
+            }
+            System.out.println("i = " + i);
+        }
+    }
+}
+```
+**Output:**  
+```
+i = 1  
+i = 2  
+i = 3  
+i = 4  
+i = 5  
+Loop breaks at i = 6  
+```
+📌 **Explanation:** The loop stops when `i == 6`, skipping the rest of the iterations.
+
+---
+
+## **3. Using `continue` in a `for` Loop**  
+- The `continue` statement **skips** the current iteration and moves to the next one.
+
+### **Example: Skipping a Specific Value**  
+```java
+public class ContinueExample {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 10; i++) {
+            if (i == 5) {
+                System.out.println("Skipping i = " + i);
+                continue; // Skips printing 5 and moves to next iteration
+            }
+            System.out.println("i = " + i);
+        }
+    }
+}
+```
+**Output:**  
+```
+i = 1  
+i = 2  
+i = 3  
+i = 4  
+Skipping i = 5  
+i = 6  
+i = 7  
+i = 8  
+i = 9  
+i = 10  
+```
+📌 **Explanation:** When `i == 5`, `continue` is executed, skipping the rest of the code for that iteration.
+
+---
+
+## **4. Using `break` and `continue` Together**
+### **Example: Print Only Even Numbers, Stop at 8**
+```java
+public class BreakContinueExample {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 10; i++) {
+            if (i % 2 != 0) {
+                continue; // Skip odd numbers
+            }
+            if (i == 8) {
+                System.out.println("Stopping at i = " + i);
+                break; // Stop the loop at 8
+            }
+            System.out.println("Even number: " + i);
+        }
+    }
+}
+```
+**Output:**  
+```
+Even number: 2  
+Even number: 4  
+Even number: 6  
+Stopping at i = 8  
+```
+📌 **Explanation:**  
+- **`continue`** skips odd numbers.  
+- **`break`** stops the loop when `i == 8`.  
