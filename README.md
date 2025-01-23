@@ -1101,3 +1101,183 @@ Stopping at i = 8
 📌 **Explanation:**  
 - **`continue`** skips odd numbers.  
 - **`break`** stops the loop when `i == 8`.  
+
+---
+
+# Java Full Stack Development Notes day7
+# **Arrays in Java**  
+
+Arrays in Java are used to store multiple values of the same type in a **single variable**. They are **dynamically allocated** in the heap memory and provide **fast access** to elements using an index.  
+
+---
+
+## **1. Declaring Arrays in Java**  
+There are multiple ways to declare arrays in Java:  
+
+```java
+int[] a;  // Preferred way
+int a[];  // Allowed but less readable
+int a[], b[], c[], x;  // a, b, c are arrays but x is a normal integer
+```
+📌 **Note:** Only `a, b, c` are arrays, `x` is just an integer.
+
+---
+
+## **2. Creating and Initializing Arrays**  
+
+### **a) Allocating Memory for an Array**
+```java
+int a[] = new int[5];  // Array of size 5, default values are 0
+```
+📌 This will create an array of **size 5** where each element is initialized to `0`.  
+
+**Incorrect Example (Compilation Error):**  
+```java
+int a[] = new int[];  // ❌ Error: Size must be specified
+```
+
+### **b) Initializing with Values**
+```java
+int a[] = {10, 20, 30};  // Direct initialization
+int a[] = new int[]{10, 20, 30};  // Another correct way
+```
+
+### **c) Dynamic Array Size**
+```java
+int x = 5;
+int a[] = new int[x];  // Allowed: x determines array size at runtime
+```
+
+---
+
+## **3. Accessing Array Elements**  
+Array elements are accessed using their **index**, starting from `0`.
+
+### **Example: Accessing and Printing an Array**
+```java
+public class ArrayExample {
+    public static void main(String[] args) {
+        int a[] = {10, 20, 30, 40, 50}; 
+        
+        System.out.println("Array elements:");
+        for (int i = 0; i < a.length; i++) {
+            System.out.println(a[i]); // Accessing each element
+        }
+    }
+}
+```
+**Output:**  
+```
+Array elements:
+10  
+20  
+30  
+40  
+50  
+```
+
+---
+
+## **4. Using `for-each` Loop (Enhanced for Loop)**  
+The `for-each` loop simplifies iteration over arrays.
+
+### **Example: Using `for-each` Loop**
+```java
+public class ForEachExample {
+    public static void main(String[] args) {
+        int numbers[] = {5, 10, 15, 20, 25};
+        
+        System.out.println("Using for-each loop:");
+        for (int num : numbers) {  // num takes values from numbers[]
+            System.out.println(num);
+        }
+    }
+}
+```
+**Output:**  
+```
+Using for-each loop:
+5  
+10  
+15  
+20  
+25  
+```
+📌 **Advantages of `for-each` loop:**  
+- No need for index management (`i` variable).  
+- Best for reading array values (not modifying them).  
+
+---
+
+## **5. Converting Array to String (`Arrays.toString()`)**
+```java
+import java.util.Arrays;
+public class ArrayToString {
+    public static void main(String[] args) {
+        int[] b = {1, 2, 3, 4, 5};
+        System.out.println(Arrays.toString(b));  // Converts array to string
+    }
+}
+```
+**Output:**  
+```
+[1, 2, 3, 4, 5]
+```
+
+---
+
+## **6. Getting the Length of an Array**
+```java
+public class ArrayLengthExample {
+    public static void main(String[] args) {
+        int a[] = {10, 20, 30, 40, 50};
+        
+        System.out.println("Length of array: " + a.length);
+        
+        System.out.println("Array elements using length:");
+        for (int i = 0; i < a.length; i++) {
+            System.out.println(a[i]);
+        }
+    }
+}
+```
+**Output:**  
+```
+Length of array: 5
+Array elements using length:
+10  
+20  
+30  
+40  
+50  
+```
+📌 **Key Point:** `a.length` returns the **total number of elements** in the array.
+
+---
+
+## **7. How Arrays are Stored in Memory (Heap vs Stack)**
+### **Memory Allocation of Arrays in Java**
+- Arrays in Java are **stored in heap memory**, which is dynamically allocated.
+- The **array reference variable** is stored in **stack memory**.
+
+### **Example of Heap Memory Allocation**
+```java
+public class ArrayMemory {
+    public static void main(String[] args) {
+        int[] arr = new int[3];  // Array is stored in Heap
+        arr[0] = 10;
+        arr[1] = 20;
+        arr[2] = 30;
+        
+        System.out.println("First Element: " + arr[0]);
+    }
+}
+```
+📌 **Explanation:**  
+- The reference `arr` is stored in **stack memory**.  
+- The actual array `{10, 20, 30}` is stored in **heap memory**.  
+
+### **Visualization of Memory**
+| **Stack Memory (Stores Reference)** | **Heap Memory (Stores Data)** |
+|------------------------------------|------------------------------|
+| `arr` (points to heap memory) | `{10, 20, 30}` |
