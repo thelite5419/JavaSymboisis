@@ -1281,3 +1281,188 @@ public class ArrayMemory {
 | **Stack Memory (Stores Reference)** | **Heap Memory (Stores Data)** |
 |------------------------------------|------------------------------|
 | `arr` (points to heap memory) | `{10, 20, 30}` |
+
+---
+
+# Java Full Stack Development Notes day8
+# **Multidimensional Arrays in Java**  
+
+A **multidimensional array** is an array that contains other arrays as elements. The most common type is the **2D array**, but Java also supports **3D arrays** and **jagged arrays** (arrays with varying column sizes).  
+
+---
+
+## **1. Declaring Multidimensional Arrays**  
+
+There are multiple ways to declare a **2D array**:  
+
+```java
+int a[][];       // Preferred way
+int [][]a;       // Also valid
+int [][][] a;    // 3D array
+```
+
+---
+
+## **2. Initializing a 2D Array**  
+
+### **a) Direct Initialization**
+```java
+int a[][] = {{1, 2, 3}, {4, 5, 6}};  // 2x3 matrix
+```
+
+### **b) Using `new` Keyword**
+```java
+int[][] b = new int[2][3];  // 2 rows, 3 columns
+```
+
+### **c) Assigning Values via Loop**
+```java
+import java.util.Scanner;
+
+public class MultiArrayInput {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int c[][] = new int[2][3];  // 2 rows, 3 columns
+
+        System.out.println("Enter elements:");
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 3; j++) {
+                c[i][j] = sc.nextInt();  // Taking input from user
+            }
+        }
+
+        System.out.println("2D Array:");
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 3; j++) {
+                System.out.print(c[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+```
+📌 **Example Input:**
+```
+1 2 3
+4 5 6
+```
+📌 **Output:**
+```
+2D Array:
+1 2 3  
+4 5 6  
+```
+
+---
+
+## **3. Printing a Multidimensional Array using `Arrays.deepToString()`**
+Instead of manually iterating over the array, we can use the `Arrays.deepToString()` method to print the entire 2D array easily.
+
+```java
+import java.util.Arrays;
+
+public class DeepToStringExample {
+    public static void main(String[] args) {
+        int[][] a = {{1, 2, 3}, {4, 5, 6}};
+        
+        System.out.println(Arrays.deepToString(a));
+    }
+}
+```
+📌 **Output:**  
+```
+[[1, 2, 3], [4, 5, 6]]
+```
+
+---
+
+## **4. Jagged Arrays (Irregular Columns)**
+A **jagged array** is an array where **rows have different numbers of columns**.  
+
+### **a) Initializing a Jagged Array**
+```java
+int a[][] = {
+    {1, 2},  
+    {3},  
+    {4, 5, 6}  
+};
+```
+
+### **b) Creating a Jagged Array Dynamically**
+```java
+int b[][] = new int[3][];  // 3 rows, columns will be defined later
+b[0] = new int[2];  // Row 0 has 2 columns
+b[1] = new int[4];  // Row 1 has 4 columns
+b[2] = new int[6];  // Row 2 has 6 columns
+```
+
+### **c) Taking Input for a Jagged Array**
+```java
+import java.util.Scanner;
+
+public class JaggedArrayExample {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        int b[][] = new int[3][];
+        b[0] = new int[2];  // 2 columns in row 0
+        b[1] = new int[4];  // 4 columns in row 1
+        b[2] = new int[6];  // 6 columns in row 2
+
+        System.out.println("Enter elements for jagged array:");
+
+        for (int i = 0; i < b.length; i++) {
+            for (int j = 0; j < b[i].length; j++) {
+                b[i][j] = sc.nextInt();  // Taking input
+            }
+        }
+
+        System.out.println("Jagged Array:");
+        for (int i = 0; i < b.length; i++) {
+            for (int j = 0; j < b[i].length; j++) {
+                System.out.print(b[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+```
+📌 **Example Input:**
+```
+1 2
+3 4 5 6
+7 8 9 10 11 12
+```
+📌 **Output:**
+```
+Jagged Array:
+1 2  
+3 4 5 6  
+7 8 9 10 11 12  
+```
+
+---
+
+## **5. Summary Table**
+| **Concept** | **Syntax / Example** |
+|------------|----------------------|
+| **Declaring a 2D Array** | `int[][] a;` or `int a[][];` |
+| **Initializing a 2D Array** | `int a[][] = {{1,2,3}, {4,5,6}};` |
+| **Allocating Memory** | `int[][] b = new int[2][3];` |
+| **Accessing Elements** | `a[i][j]` |
+| **Printing using Loop** | `for(i=0; i < a.length; i++)` |
+| **Printing using `deepToString()`** | `System.out.println(Arrays.deepToString(a));` |
+| **Jagged Array Declaration** | `int[][] a = new int[3][];` |
+| **Jagged Array Initialization** | `a[0] = new int[2];` |
+| **Jagged Array Input** | `for (j=0; j < a[i].length; j++)` |
+
+---
+
+## **6. Key Takeaways**
+✔ **Multidimensional arrays** allow you to store data in a grid-like format.  
+✔ **Jagged arrays** have variable-length rows, making them memory efficient.  
+✔ **`Arrays.deepToString()`** is useful for printing complex arrays.  
+✔ **Nested loops** help in iterating over 2D and jagged arrays.  
+
+🚀 **Now you are ready to work with multidimensional arrays in Java!**
+
