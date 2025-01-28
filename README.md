@@ -1466,3 +1466,189 @@ Jagged Array:
 
 🚀 **Now you are ready to work with multidimensional arrays in Java!**
 
+
+---
+
+# Java Full Stack Development Notes day7
+# **Java String Class Overview**  
+
+In Java, the **`String`** class is a **final** and **immutable** class that represents a sequence of characters. It is defined as:  
+
+```java
+public final class String extends Object implements CharSequence, Serializable
+```
+
+This means:  
+✔ **It cannot be inherited.**  
+✔ **It extends `Object`.**  
+✔ **Implements `CharSequence` & `Serializable`.**  
+
+---
+
+## **1. Ways to Create a String in Java**  
+
+### **1️⃣ Using String Literals (Stored in String Constant Pool)**
+```java
+String s1 = "aher";
+String s2 = "aher";  // Same reference as s1 (stored in SCP)
+```
+🔹 **Memory Optimization:** If `"aher"` already exists in the **String Constant Pool (SCP)**, the reference will be reused.  
+
+### **2️⃣ Using `new` Keyword (Stored in Heap Memory)**
+```java
+String s3 = new String("aniket");  // Creates a new object in Heap
+String s4 = new String(s3);        // Creates another copy in Heap
+```
+🔹 Unlike literals, these **are stored separately in Heap memory**, even if the content is the same.  
+
+### **3️⃣ Using a Character Array**
+```java
+char ch[] = {'a', 'b', 'c', 'd', 'e'};
+String s5 = new String(ch);       // "abcde"
+String s6 = new String(ch, 2, 3); // "cde" (Starting from index 2, length 3)
+```
+
+### **4️⃣ Using a Byte Array (ASCII Representation)**
+```java
+byte b[] = {101, 102, 103, 105};
+String s7 = new String(b);       // "efgi"
+String s8 = new String(b, 2, 2); // "gi"
+```
+
+### **5️⃣ Converting `StringBuilder` & `StringBuffer` to `String`**
+```java
+StringBuilder sb = new StringBuilder("amwy");
+String s9 = new String(sb);  // Converts StringBuilder to String
+
+StringBuffer sh = new StringBuffer("hekk");
+String s10 = new String(sh);  // Converts StringBuffer to String
+```
+
+---
+
+## **2. String Pool (Memory Optimization in Java)**
+🔹 **String Constant Pool (SCP)** optimizes memory by storing only **one instance** of a string literal.  
+🔹 If the string already exists, Java **reuses the reference** instead of creating a new object.  
+
+📌 **Example:**
+```java
+String s1 = "karad";
+String s2 = "karad";
+
+if (s1 == s2) {
+    System.out.println("Both have the same memory location");
+}
+```
+✅ **Output:** `"Both have the same memory location"`  
+➡ **Reason:** Both `s1` and `s2` point to the **same memory location in SCP**.
+
+---
+
+## **3. String Comparison Methods**
+| **Method** | **Compares** | **Returns** |
+|------------|-------------|-------------|
+| `==` | Memory reference | `true` if same reference |
+| `.equals()` | Content | `true` if same content |
+| `.compareTo()` | Lexicographically | `0` if equal, `>0` or `<0` otherwise |
+
+📌 **Example:**
+```java
+String s1 = "aher";
+String s2 = "aher";
+String s3 = new String("aher");
+
+System.out.println(s1 == s2);        // true (Same SCP reference)
+System.out.println(s1 == s3);        // false (Different memory locations)
+System.out.println(s1.equals(s3));   // true (Same content)
+System.out.println(s1.compareTo(s3));// 0 (Same lexicographic order)
+```
+
+---
+
+## **4. String Methods (Non-Static)**
+| **Method** | **Description** |
+|------------|----------------|
+| `toUpperCase()` | Converts to uppercase |
+| `toLowerCase()` | Converts to lowercase |
+| `length()` | Returns string length |
+| `replace("a", "b")` | Replaces characters |
+| `trim()` | Removes spaces from start & end |
+| `substring(2,5)` | Extracts substring |
+| `charAt(3)` | Returns character at index 3 |
+| `indexOf('a')` | First occurrence index |
+| `lastIndexOf('a')` | Last occurrence index |
+| `equals("str")` | Checks content equality |
+| `equalsIgnoreCase("STR")` | Ignores case difference |
+| `compareToIgnoreCase("STR")` | Compares ignoring case |
+
+📌 **Example:**
+```java
+String s = "  Hello World  ";
+System.out.println(s.trim());       // "Hello World"
+System.out.println(s.toUpperCase()); // "  HELLO WORLD  "
+System.out.println(s.substring(2,7));// "Hello"
+System.out.println(s.charAt(4));     // 'o'
+```
+
+---
+
+## **5. String is Immutable in Java**
+🔹 **Strings are immutable**, meaning their value **cannot be changed** after creation.  
+🔹 Any modification **creates a new String object** instead of modifying the original.  
+
+📌 **Example:**
+```java
+String s1 = "hello";
+s1.toUpperCase();
+System.out.println(s1); // Still "hello" (not modified)
+```
+✅ **Reason:** The `.toUpperCase()` method **returns a new string**, but we didn't store it.
+
+---
+
+## **6. Using `System.exit(0)`**
+📌 **Terminates the entire program immediately.**
+```java
+System.out.println("Before Exit");
+System.exit(0); // Program stops here
+System.out.println("This will never execute");
+```
+
+---
+![Image Alt Text](https://github.com/thelite5419/JavaSymboisis/blob/main/stringStoring.png)
+
+
+# **String Storage in Java**  
+
+## **Overview**  
+This diagram illustrates how **Java stores strings** in memory, particularly focusing on the **Heap**, **String Constant Pool**, and the **Stack**.  
+
+## **Key Concepts**  
+1. **Heap Memory**  
+   - When using `new String("aher")`, a new object is explicitly created in the heap.  
+   - This leads to two memory allocations:  
+     - One in the heap.  
+     - One in the **String Constant Pool** (if it doesn’t already exist).  
+
+2. **String Constant Pool (SCP)**  
+   - Strings in Java are stored in a special memory area called the **String Constant Pool** to optimize memory usage.  
+   - If a string already exists in the pool, Java **does not create a new object** but returns a reference to the existing one.  
+
+3. **Stack Memory**  
+   - Stores local variables and references to objects in the heap or SCP.  
+   - In the diagram, `s3` and `s4` point to the **same string reference** in the SCP, while `s1` points to a separately allocated object in the heap.  
+
+## **Example Code**  
+```java
+public class StringMemory {
+    public static void main(String[] args) {
+        String s1 = new String("aher"); // Creates a new object in the heap
+        String s2 = "aher"; // Allocates in SCP
+        String s3 = "karad"; // Stored in SCP
+        String s4 = "karad"; // Points to the same SCP reference as s3
+
+        System.out.println(s1 == s2); // false (Different memory locations)
+        System.out.println(s3 == s4); // true (Same reference from SCP)
+    }
+}
+```
