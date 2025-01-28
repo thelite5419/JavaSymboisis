@@ -1469,7 +1469,7 @@ Jagged Array:
 
 ---
 
-# Java Full Stack Development Notes day7
+# Java Full Stack Development Notes Day9
 # **Java String Class Overview**  
 
 In Java, the **`String`** class is a **final** and **immutable** class that represents a sequence of characters. It is defined as:  
