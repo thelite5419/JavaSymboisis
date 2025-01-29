@@ -15,5 +15,4 @@ public class possibleRotation {
 			System.out.println(str);
 		}
 	}
-
 }
