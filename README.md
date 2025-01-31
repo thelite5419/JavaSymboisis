@@ -1652,3 +1652,106 @@ public class StringMemory {
     }
 }
 ```
+
+---
+# Java Full Stack Development Notes Day10
+# Java String Handling Guide
+
+## 1. String vs StringBuffer vs StringBuilder
+### Key Differences:
+| Feature          | String          | StringBuffer       | StringBuilder      |
+|------------------|-----------------|--------------------|--------------------|
+| **Mutability**   | Immutable       | Mutable            | Mutable            |
+| **Thread Safety**| Not Applicable  | Thread-safe (Synchronized) | Not Thread-safe   |
+| **Performance**  | Slow for modifications | Faster than String | Fastest            |
+| **Use Case**     | Fixed values    | Multi-threaded env | Single-threaded env |
+
+---
+
+## 2. StringBuffer in Depth
+### Basic Usage:
+```java
+StringBuffer sb1 = new StringBuffer("amol");
+StringBuffer sb2 = new StringBuffer();  // Initial capacity = 16
+
+System.out.println(sb1);  // Output: amol
+System.out.println(sb2);  // Output: (empty string)
+```
+
+### Conversion from String:
+```java
+String s = "hello";
+StringBuffer s3 = new StringBuffer(s);  // Converts String to StringBuffer
+```
+
+### Key Methods:
+1. **append()** - Adds to the end:
+```java
+sb2.append(s3);  // sb2 becomes "hello"
+```
+
+2. **insert()** - Adds at specific position:
+```java
+sb1.insert(3, "ch");  
+// Original: "a m o l" (indices 0-3)
+// Output: "amochl" (inserts at index 3)
+```
+
+3. **capacity()** - Returns current storage size:
+```java
+StringBuffer sb = new StringBuffer();  // Default capacity = 16
+sb.append("12345678901234567");  // 17 characters
+System.out.println(sb.capacity());  // Output: 34 (16*2 + 2)
+```
+
+---
+
+## 3. Memory Management
+### Capacity Growth Formula:
+- When buffer is full: `New Capacity = (Current Capacity * 2) + 2`
+- Example:
+  - Initial: 16
+  - First expansion: 16*2+2 = 34
+  - Second expansion: 34*2+2 = 70
+
+### Trim Example:
+```java
+StringBuffer sb4 = new StringBuffer(1000);
+sb4.append("Hello");
+sb4.trimToSize();  // Reduces capacity to actual length (5)
+System.out.println(sb4.capacity());  // Output: 5
+```
+
+### Other Methods:
+```java
+sb4.delete(0,4);  // Removes characters from index 0-3 (modifies original)
+sb4.reverse();    // Reverses the sequence (original modified)
+```
+
+---
+
+## 4. StringBuilder
+### Key Points:
+- **Not thread-safe** (opposite of what was mentioned earlier)
+- **Faster** than StringBuffer in single-threaded environments
+- **Same methods** as StringBuffer but without synchronization
+
+---
+
+## 5. StringTokenizer
+### Basic Usage:
+```java
+String s = "dr. daulatrao aher college of Engineering";
+StringTokenizer st = new StringTokenizer(s);  // Default delimiter: space
+
+while(st.hasMoreTokens()) {
+    System.out.println(st.nextToken());  
+}
+// Outputs 5 tokens separated by spaces
+```
+
+### Key Features:
+- Splits strings into tokens
+- Default delimiter: whitespace
+- Alternative delimiters can be specified
+- Legacy class (Consider using String.split() for new code)
