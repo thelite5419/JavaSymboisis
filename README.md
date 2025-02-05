@@ -1889,3 +1889,147 @@ public class Singleton {
 - **`this`** always refers to current object instance
 - Constructor chaining (`this()`) must be **first statement** in constructor
 - Copy constructors create **shallow copies** by default (for deep copies, you need manual implementation)
+
+---
+
+# Java Full Stack Development Notes Day12
+## Java Concepts Guide: Recursion & Object Handling
+
+## 1. Recursion Types with Examples
+
+### 1.1 Direct Recursion
+A method directly calling itself:
+
+**Factorial Example:**
+```java
+public static int factorial(int n) {
+    if(n == 0) return 1;  // Base case
+    return n * factorial(n-1);  // Direct recursive call
+}
+```
+
+### 1.2 Indirect Recursion
+Methods calling each other in a cycle:
+
+**Even-Odd Checker:**
+```java
+public static boolean isEven(int n) {
+    if(n == 0) return true;
+    return isOdd(n-1);  // Indirect call
+}
+
+public static boolean isOdd(int n) {
+    if(n == 0) return false;
+    return isEven(n-1);  // Indirect call
+}
+```
+
+### 1.3 QuickSort Example (Direct Recursion)
+```java
+void quickSort(int[] arr, int low, int high) {
+    if(low < high) {
+        int pi = partition(arr, low, high);
+        quickSort(arr, low, pi-1);  // Direct recursive call
+        quickSort(arr, pi+1, high); // Direct recursive call
+    }
+}
+```
+
+---
+
+## 2. Object Handling in Methods
+
+### 2.1 Passing Objects to Methods
+Objects are passed by **reference** (memory address is copied):
+
+```java
+class Student {
+    String name;
+    double grade;
+    
+    void boostGrade() {
+        this.grade += 0.5;
+    }
+}
+
+public class Main {
+    public static void upgradeStudent(Student s) {
+        s.boostGrade();  // Modifies original object
+        s = new Student();  // Doesn't affect original reference
+    }
+    
+    public static void main(String[] args) {
+        Student st = new Student();
+        st.grade = 3.5;
+        upgradeStudent(st);
+        System.out.println(st.grade);  // Output: 4.0
+    }
+}
+```
+
+### 2.2 Returning Objects from Methods
+Methods can create/return objects:
+
+```java
+class Calculator {
+    int value;
+    
+    Calculator add(Calculator other) {
+        Calculator result = new Calculator();
+        result.value = this.value + other.value;
+        return result;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Calculator c1 = new Calculator();
+        c1.value = 5;
+        
+        Calculator c2 = new Calculator();
+        c2.value = 3;
+        
+        Calculator sum = c1.add(c2);
+        System.out.println(sum.value);  // Output: 8
+    }
+}
+```
+
+---
+
+## Key Concepts Summary
+
+| Concept                 | Key Points                                                                 |
+|-------------------------|----------------------------------------------------------------------------|
+| **Direct Recursion**    | Method calls itself directly                                              |
+| **Indirect Recursion**  | Methods call each other in a cycle                                        |
+| **Object Passing**      | - Passed by reference<br>- Modifications affect original object           |
+| **Object Returning**    | - Can return new/modified objects<br>- Supports method chaining           |
+| **Memory Management**   | - Object parameters copy references, not objects<br>- Primitives copy values |
+
+---
+
+## Memory Diagram: Object Passing
+
+```
+Main Memory:
+[Stack]                 [Heap]
+st (reference)  -->   Student {grade: 4.0}
+s (reference copy) --> (initially same as st)
+```
+
+---
+
+## When to Use What?
+
+1. **Recursion**:
+   - Tree/graph traversals
+   - Divide-and-conquer algorithms
+   - Problems with recursive definitions
+
+2. **Object Handling**:
+   - Modify existing objects in methods
+   - Create factory methods
+   - Implement fluent interfaces
+
+This structure helps understand how recursion works and how objects behave in method parameters/return types. Let me know if you need more specific examples!
