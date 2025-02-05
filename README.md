@@ -1755,3 +1755,137 @@ while(st.hasMoreTokens()) {
 - Default delimiter: whitespace
 - Alternative delimiters can be specified
 - Legacy class (Consider using String.split() for new code)
+
+---
+
+# Java Full Stack Development Notes Day11
+## Java Constructors and `this` Keyword Guide
+
+## 1. Constructor Types with Examples
+
+### 1.1 Default Constructor
+```java
+public class Student {
+    // Default constructor (no arguments)
+    public Student() {
+        System.out.println("Default constructor called");
+    }
+}
+```
+
+### 1.2 Parameterized Constructor
+```java
+public class Student {
+    String name;
+    int age;
+    
+    // Parameterized constructor
+    public Student(String name, int age) {
+        this.name = name;  // Using 'this' to resolve naming conflict
+        this.age = age;
+    }
+}
+```
+
+### 1.3 Copy Constructor
+```java
+public class Student {
+    String name;
+    int age;
+    
+    // Copy constructor
+    public Student(Student original) {
+        this.name = original.name;
+        this.age = original.age;
+    }
+}
+```
+
+---
+
+## 2. `this` Keyword Explained
+
+### 2.1 Basic Usage
+Used to refer to current class instance variables:
+```java
+public class Car {
+    String model;
+    
+    public Car(String model) {
+        this.model = model;  // Differentiates instance var from parameter
+    }
+}
+```
+
+### 2.2 Calling Constructors with `this()`
+Used to call one constructor from another:
+```java
+public class Rectangle {
+    int width, height;
+    
+    // Default constructor
+    public Rectangle() {
+        this(10, 20);  // Calls parameterized constructor
+    }
+    
+    // Parameterized constructor
+    public Rectangle(int w, int h) {
+        this.width = w;
+        this.height = h;
+    }
+}
+```
+
+### 2.3 Passing `this` as Parameter
+Used to pass current object to methods:
+```java
+public class Employee {
+    void display() {
+        Printer.printDetails(this);  // Passes current object
+    }
+}
+
+class Printer {
+    static void printDetails(Employee emp) {
+        // Process employee details
+    }
+}
+```
+
+---
+
+## 3. Singleton Pattern Clarification
+**Private constructor ≠ Singleton**, but used in singleton implementation:
+```java
+public class Singleton {
+    private static Singleton instance;
+    
+    // Private constructor prevents external instantiation
+    private Singleton() {}
+    
+    public static Singleton getInstance() {
+        if(instance == null) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+}
+```
+
+---
+
+## Key Differences Table
+
+| Constructor Type       | Purpose                                 | Example Use Case              |
+|------------------------|-----------------------------------------|-------------------------------|
+| Default Constructor    | Initializes with default values         | Object creation without params |
+| Parameterized Constructor | Initializes with specific values      | Custom object initialization  |
+| Copy Constructor        | Creates copy of existing object        | Object cloning                |
+| Private Constructor     | Restrict object creation               | Singleton pattern             |
+
+---
+
+## Memory Tip
+- **`this`** always refers to current object instance
+- Constructor chaining (`this()`) must be **first statement** in constructor
+- Copy constructors create **shallow copies** by default (for deep copies, you need manual implementation)
