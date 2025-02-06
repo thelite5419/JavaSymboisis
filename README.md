@@ -2032,4 +2032,110 @@ s (reference copy) --> (initially same as st)
    - Create factory methods
    - Implement fluent interfaces
 
-This structure helps understand how recursion works and how objects behave in method parameters/return types. Let me know if you need more specific examples!
+
+---
+
+
+# Java Full Stack Development Notes Day13
+## 1. `final` Keyword
+### Key Rules:
+| Context         | Behavior                                | Example                          |
+|-----------------|-----------------------------------------|----------------------------------|
+| **Variable**    | Value cannot be changed after assignment | `final int MAX = 100;`           |
+| **Static Final**| Must initialize at declaration or static block | `static final double PI = 3.14;` |
+| **Method**      | Cannot be overridden in subclasses      | `public final void display() { }`|
+| **Class**       | Cannot be inherited                     | `final class SecureData { }`     |
+
+### Initialization Examples:
+```java
+class Example {
+    final int A;        // Initialized in constructor
+    static final int B; // Initialized in static block
+    
+    public Example() {
+        A = 10;
+    }
+    
+    static {
+        B = 20;
+    }
+}
+```
+
+---
+
+## 2. Call By Value vs Reference
+### Key Differences:
+|                      | Call by Value                         | Call by Reference                 |
+|----------------------|---------------------------------------|------------------------------------|
+| **Data Types**       | Primitive types                       | Objects                            |
+| **Memory Handling**  | Copy of value passed                  | Copy of reference passed           |
+| **Modification**     | Changes affect only copy              | Changes affect original object     |
+| **Example**          | `int x = 5; modify(x);`               | `Student s = new Student(); modify(s);` |
+
+### Example Code:
+```java
+void modifyPrimitive(int val) {  // Call by value
+    val = 20;  // Original remains unchanged
+}
+
+void modifyObject(Student s) {   // Call by reference value
+    s.setName("John");  // Original object modified
+}
+```
+
+---
+
+## 3. Garbage Collection
+### Key Mechanisms:
+1. **Automatic Memory Management**
+   - JVM destroys objects with **zero references**
+   - No explicit destructors in Java
+   - Runs in background via daemon thread
+
+2. **String Pool Behavior**
+   ```java
+   String s1 = "Hello";  // In string pool
+   String s2 = new String("Hello");  // In heap
+   ```
+   - Pool strings persist until JVM exits
+   - Heap strings become eligible for GC when unreferenced
+
+3. **Manual Suggestions (Not Guaranteed):**
+   ```java
+   System.gc();      // Hint to JVM
+   Runtime.getRuntime().gc();  // Alternative
+   ```
+
+---
+
+## 4. Memory Management Examples
+
+### StringBuffer Capacity Growth:
+```java
+StringBuffer sb = new StringBuffer();  // Initial capacity 16
+sb.append("A".repeat(17));             // New capacity: (16*2)+2 = 34
+sb.append("B".repeat(35));             // New capacity: (34*2)+2 = 70
+```
+
+### Garbage Collection Demo:
+```java
+void createGarbage() {
+    for(int i=0; i<1000; i++) {
+        new Student();  // Eligible for GC immediately
+    }
+}
+```
+
+---
+
+
+## Common Misconceptions Clarified
+
+| Incorrect Statement              | Correct Explanation                  |
+|-----------------------------------|---------------------------------------|
+| "Java has call by reference"      | Java passes object reference values  |
+| "final variables need constant initializers" | Can initialize in constructor |
+| "GC immediately destroys objects" | Collection time is non-deterministic |
+| "StringBuffer is faster than StringBuilder" | Only in multi-threaded contexts |
+
