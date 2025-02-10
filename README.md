@@ -2139,3 +2139,202 @@ void createGarbage() {
 | "GC immediately destroys objects" | Collection time is non-deterministic |
 | "StringBuffer is faster than StringBuilder" | Only in multi-threaded contexts |
 
+
+---
+
+# Java Full Stack Development Notes Day14
+## 1. Swing – Using `addActionListener` with a Lambda Expression
+
+When creating a Swing GUI, you often need to respond to user actions (like clicking a button). Instead of writing an anonymous inner class, you can use a lambda expression for brevity. The lambda function provides the implementation for the event’s action.
+
+**Example:**
+```java
+import javax.swing.*;
+
+public class SwingLambdaExample {
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Swing Lambda Example");
+        JButton button = new JButton("Click Me!");
+
+        // Using lambda expression to handle button clicks
+        button.addActionListener(e -> {
+            System.out.println("Button was clicked!");
+        });
+
+        frame.add(button);
+        frame.setSize(300, 200);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+}
+```
+**Explanation:**  
+- The lambda `(e -> { ... })` is the concise implementation of the `ActionListener` interface.
+- When the button is clicked, the code inside the lambda prints a message.
+
+---
+
+## 2. Polymorphism in Java
+
+Polymorphism lets one interface be used for a general class of actions. There are two main types:
+
+### 2.1 Compile-Time Polymorphism (Method Overloading)
+
+In compile-time polymorphism, methods have the same name but different parameter lists. The method to invoke is determined at compile time.
+
+**Example:**
+```java
+class Calculator {
+    // Method overloading: different parameter types
+    public int add(int a, int b) {
+        return a + b;
+    }
+    public double add(double a, double b) {
+        return a + b;
+    }
+}
+
+public class CompileTimePolymorphism {
+    public static void main(String[] args) {
+        Calculator calc = new Calculator();
+        System.out.println("Sum (int): " + calc.add(5, 10));           // 15
+        System.out.println("Sum (double): " + calc.add(5.5, 10.5));      // 16.0
+    }
+}
+```
+**Explanation:**  
+- Two `add` methods are defined with different parameter types.
+- The compiler decides which method to call based on the arguments.
+
+### 2.2 Runtime Polymorphism (Method Overriding and Upcasting)
+
+Runtime polymorphism is achieved by method overriding where a subclass provides its own implementation of a method declared in its superclass. The decision is made at runtime, often with upcasting.
+
+**Example:**
+```java
+class Animal {
+    public void sound() {
+        System.out.println("Animal makes a sound");
+    }
+}
+
+class Dog extends Animal {
+    @Override
+    public void sound() {
+        System.out.println("Dog barks");
+    }
+}
+
+public class RuntimePolymorphism {
+    public static void main(String[] args) {
+        // Upcasting: Dog object referenced as an Animal
+        Animal myAnimal = new Dog();  
+        myAnimal.sound();  // Calls Dog's overridden sound() method
+    }
+}
+```
+**Explanation:**  
+- `Dog` overrides the `sound()` method.
+- The reference is of type `Animal`, but the actual object is a `Dog` (upcasting), so at runtime, Dog’s version of `sound()` is called.
+
+---
+
+## 3. Abstract Classes, Concrete Classes, and Interfaces
+
+### 3.1 Abstract Classes
+- **Abstract classes** cannot be instantiated.
+- They may contain both abstract methods (declared but not implemented) and concrete methods (fully implemented).
+
+**Example:**
+```java
+abstract class Shape {
+    // Abstract method (no implementation)
+    abstract void draw();
+    
+    // Concrete method
+    public void display() {
+        System.out.println("Displaying shape");
+    }
+}
+
+class Circle extends Shape {
+    @Override
+    void draw() {
+        System.out.println("Drawing circle");
+    }
+}
+
+public class AbstractExample {
+    public static void main(String[] args) {
+        Shape shape = new Circle(); // Upcasting
+        shape.draw();      // "Drawing circle"
+        shape.display();   // "Displaying shape"
+    }
+}
+```
+
+### 3.2 Interfaces
+- All methods declared in an **interface** are implicitly `public` and `abstract` (no need to declare these keywords).
+- Interfaces can extend one another using the `extends` keyword.
+- If a class implements an interface, it must provide implementations for all methods.
+
+**Example:**
+```java
+interface Drawable {
+    void draw(); // implicitly public and abstract
+}
+
+interface Colorable extends Drawable {
+    void color(String color); // additional method in extended interface
+}
+
+class Square implements Colorable {
+    @Override
+    public void draw() {
+        System.out.println("Drawing square");
+    }
+    
+    @Override
+    public void color(String color) {
+        System.out.println("Coloring square with " + color);
+    }
+}
+
+public class InterfaceExample {
+    public static void main(String[] args) {
+        Square sq = new Square();
+        sq.draw();        // "Drawing square"
+        sq.color("red");  // "Coloring square with red"
+    }
+}
+```
+
+### 3.3 Differences: Final Class, Abstract Class, and Interface
+
+- **Final Class:**  
+  - Cannot be extended (subclassed).  
+  - Example: `public final class String { ... }`
+
+  **Example:**
+  ```java
+  final class FinalClass {
+      public void display() {
+          System.out.println("This is a final class");
+      }
+  }
+  
+  // Cannot extend FinalClass:
+  // class SubClass extends FinalClass {} // This would cause a compile-time error.
+  ```
+
+- **Abstract Class:**  
+  - May contain abstract methods and concrete methods.
+  - Cannot be instantiated.
+  - Supports inheritance (only one class can extend an abstract class).
+
+- **Interface:**  
+  - Contains abstract methods (by default) and constants.
+  - A class can implement multiple interfaces.
+  - Methods in an interface are implicitly `public` and `abstract` (unless they are static or default).
+
+
