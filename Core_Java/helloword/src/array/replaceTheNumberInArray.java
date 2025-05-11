@@ -29,7 +29,6 @@ public class replaceTheNumberInArray {
 		for (int i = 0; i < a.length; i++) {
 			System.out.print("\t"+a[i]);
 		}
-	
 		
 	}
 }

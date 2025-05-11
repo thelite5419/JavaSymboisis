@@ -26,7 +26,6 @@ public class AscendingCharacter {
         }
         
         String asecStr = new String(charArray);
-        
         System.out.println("The String in ascending order is: " + asecStr);
     }
 }

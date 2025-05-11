@@ -16,6 +16,5 @@ public class forLoop8 {
 			temp = temp/10;
 		}
 		System.out.println(sum);
-
 	}
 }
